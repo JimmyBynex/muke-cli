@@ -21,7 +21,7 @@ daemon/main.go            WebSocket 服务器，中转 CLI 和扩展的通信
 internal/api/api.go       平台 HTTP API 封装
 internal/api/types.go     请求/响应结构体
 internal/client/client.go Cookie 获取（文件缓存 → Daemon → 扩展）
-internal/config/config.go 本地配置读写（~/.muke/config.json）
+internal/config/config.go 本地配置读写（~/.muke/config.json，session 缓存在 ~/.muke/session）
 internal/proto/message.go WebSocket 消息格式
 extension/                Chrome 扩展（拦截请求头抓 cookie，连接 Daemon）
 ```

@@ -19,7 +19,7 @@ const healthURL = "http://localhost:7788/health"
 // sessionFile 返回 cookie 缓存文件路径（~/.mooc/session）
 func sessionFile() string {
 	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".mooc", "session")
+	return filepath.Join(home, ".muke", "session")
 }
 
 // GetCookies 获取 Cookie：先读本地缓存，读不到再走 Daemon

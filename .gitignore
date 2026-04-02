@@ -9,5 +9,9 @@ answers.json
 # IDE
 .idea/
 
+# 环境变量
+.env
+.env.*
+
 # 本地 Claude Code 设置（含个人权限配置）
 .claude/settings.local.json
