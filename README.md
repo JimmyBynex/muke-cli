@@ -30,7 +30,7 @@
 ### 2. 克隆项目
 
 ```bash
-git clone https://github.com/你的用户名/muke-cli.git
+git clone https://github.com/JimmyBynex/muke-cli.git
 cd muke-cli
 ```
 
@@ -44,7 +44,7 @@ go mod tidy
 
 ### 首次配置
 
-登录 MOOC2 后，随便打开一个课程页面（让扩展捕获 cookie），然后：
+确保 Chrome 扩展已启用，登录 MOOC2 后运行：
 
 ```bash
 go run ./cmd/muke setup
