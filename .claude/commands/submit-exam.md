@@ -4,17 +4,25 @@
 ```bash
 go run ./cmd/muke refresh
 ```
-然后重试失败的命令。
+然后重试失败的命令一次。若重试后仍然失败，停止并告知用户错误信息。
 
 ## 步骤 1：列出英语课考试
-
-如果输出提示"请先运行 muke setup"，则先运行 `go run ./cmd/muke setup`，将课程列表格式化为 markdown 表格，让用户选择英语课程 id，之后再继续。
 
 ```bash
 go run ./cmd/muke exams
 ```
 
-将命令输出格式化为 markdown 表格展示给用户，询问选哪场考试的 id。
+根据输出判断：
+
+- 输出包含"获取 Cookie 失败"：**停止执行**，告知用户：
+  1. 确认 Chrome 扩展已启用（ chrome://extensions/ ）
+  2. 在浏览器打开 https://mooc2.uestc.edu.cn/ 并登录
+  3. 登录后点击右上角**个人中心**，触发带 session 的请求，让扩展捕获 cookie（或者再点击 https://mooc2.uestc.edu.cn/user/index#/ ）
+  4. 完成后重新执行 `/submit-exam`
+
+- 输出提示"请先运行 muke setup"：运行 `go run ./cmd/muke setup` 列出课程列表，格式化为 markdown 表格展示给用户，询问英语课程 id，然后运行 `go run ./cmd/muke setup <course-id>` 保存，完成后**自动继续**，直接执行下一步。
+
+- 正常输出考试列表：格式化为 markdown 表格展示给用户，**必须展示全部考试，不得省略任何一行**，询问选哪场考试的 id。
 
 ## 步骤 2：获取题目结构
 

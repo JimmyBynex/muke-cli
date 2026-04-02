@@ -11,8 +11,20 @@ type Config struct {
 }
 
 func configFile() string {
-	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".muke", "config.json")
+	dir, _ := os.Getwd()
+	// 向上查找包含 go.mod 的项目根目录
+	for {
+		if _, err := os.Stat(filepath.Join(dir, "go.mod")); err == nil {
+			return filepath.Join(dir, ".muke", "config.json")
+		}
+		parent := filepath.Dir(dir)
+		if parent == dir {
+			break
+		}
+		dir = parent
+	}
+	cwd, _ := os.Getwd()
+	return filepath.Join(cwd, ".muke", "config.json")
 }
 
 func Load() (*Config, error) {

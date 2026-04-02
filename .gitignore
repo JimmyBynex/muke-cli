@@ -2,6 +2,9 @@
 *.exe
 *.out
 
+# 运行时数据（cookie 缓存、课程配置）
+.muke/
+
 # 答案文件（个人私密）
 answers.json
 4_1成电慕课_英语听力.md

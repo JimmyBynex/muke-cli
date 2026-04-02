@@ -21,7 +21,7 @@ daemon/main.go            WebSocket 服务器，中转 CLI 和扩展的通信
 internal/api/api.go       平台 HTTP API 封装
 internal/api/types.go     请求/响应结构体
 internal/client/client.go Cookie 获取（文件缓存 → Daemon → 扩展）
-internal/config/config.go 本地配置读写（~/.muke/config.json，session 缓存在 ~/.muke/session）
+internal/config/config.go 本地配置读写（.muke/config.json，session 缓存在 .muke/session，均在项目目录下）
 internal/proto/message.go WebSocket 消息格式
 extension/                Chrome 扩展（拦截请求头抓 cookie，连接 Daemon）
 ```
@@ -40,8 +40,11 @@ extension/                Chrome 扩展（拦截请求头抓 cookie，连接 Dae
 
 ## 提交考试流程（/submit-exam skill）
 
-1. `muke exams` 列出考试，让用户选 exam_id
+1. `muke exams` 列出考试
+   - 若提示未配置课程，先运行 `muke setup` 完成配置，然后自动继续
+   - 将列表展示给用户，询问 exam_id
 2. `muke exam <id>` 获取题目，记录 subject_id 和 option_id
-3. 读取用户答案文件，生成 answers.json
-4. 用户确认后 `muke submit <id> answers.json`
-5. `muke result <id>` 查看成绩
+3. 询问用户答案文件路径，读取内容，生成 answers.json
+4. 展示 answers.json 让用户确认
+5. `muke submit <id> answers.json` 提交
+6. `muke result <id>` 查看成绩

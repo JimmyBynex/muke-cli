@@ -64,6 +64,8 @@ func cmdRefresh() {
 }
 
 // cmdSetup 列出所有课程，让用户选定英语课程并保存
+// 用法：muke setup [course-id]
+// 若不传 course-id，则打印课程列表后退出，等待用户再次调用并传入 id
 func cmdSetup() {
 	cookie, err := client.GetCookies(api.Domain())
 	if err != nil {
@@ -74,6 +76,19 @@ func cmdSetup() {
 	resp, err := api.Courses(cookie)
 	fatal(err)
 
+	// 如果直接传了 course-id，直接保存
+	if len(os.Args) >= 3 {
+		courseID := os.Args[2]
+		cfg := &config.Config{EnglishCourseID: courseID}
+		if err := config.Save(cfg); err != nil {
+			fmt.Fprintln(os.Stderr, "保存配置失败:", err)
+			os.Exit(1)
+		}
+		fmt.Printf("✅ 已保存，英语课程 id = %s\n", courseID)
+		return
+	}
+
+	// 否则打印课程列表，提示用户传入 id
 	fmt.Printf("课程列表（共 %d 门）：\n", len(resp.Courses))
 	for i, c := range resp.Courses {
 		instructor := ""
@@ -82,17 +97,7 @@ func cmdSetup() {
 		}
 		fmt.Printf("  %2d. [id=%d] %s  学期:%s%s\n", i+1, c.ID, c.Name, c.Semester.Name, instructor)
 	}
-
-	fmt.Print("\n请输入你的英语课程 id: ")
-	var courseID string
-	fmt.Scan(&courseID)
-
-	cfg := &config.Config{EnglishCourseID: courseID}
-	if err := config.Save(cfg); err != nil {
-		fmt.Fprintln(os.Stderr, "保存配置失败:", err)
-		os.Exit(1)
-	}
-	fmt.Printf("✅ 已保存，英语课程 id = %s\n", courseID)
+	fmt.Println("\n请运行: muke setup <course-id>")
 }
 
 // getEnglishCourseID 从配置文件读取课程 ID，没有则提示运行 setup

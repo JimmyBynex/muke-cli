@@ -108,8 +108,8 @@ go run ./cmd/muke refresh                         # 刷新 cookie
 
 扩展通过拦截请求头捕获 `session` cookie（HttpOnly，无法通过 JS 直接读取）。
 
-所有本地数据存在 `~/.muke/` 目录下：
-- `~/.muke/session` — cookie 缓存
-- `~/.muke/config.json` — 课程配置
+所有本地数据存在项目目录下的 `.muke/` 文件夹中（已 gitignore，不会上传）：
+- `.muke/session` — cookie 缓存
+- `.muke/config.json` — 课程配置
 
 cookie 过期后运行 `muke refresh` 重新获取。

@@ -16,10 +16,14 @@ import (
 const daemonURL = "ws://localhost:7788/cli"
 const healthURL = "http://localhost:7788/health"
 
-// sessionFile 返回 cookie 缓存文件路径（~/.mooc/session）
+// sessionFile 返回 cookie 缓存文件路径（项目目录/.muke/session）
 func sessionFile() string {
-	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".muke", "session")
+	root, err := findProjectRoot()
+	if err != nil {
+		// 找不到项目根目录时回退到当前目录
+		root, _ = os.Getwd()
+	}
+	return filepath.Join(root, ".muke", "session")
 }
 
 // GetCookies 获取 Cookie：先读本地缓存，读不到再走 Daemon
