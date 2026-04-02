@@ -1,0 +1,13 @@
+# 编译产物
+*.exe
+*.out
+
+# 答案文件（个人私密）
+answers.json
+4_1成电慕课_英语听力.md
+
+# IDE
+.idea/
+
+# 本地 Claude Code 设置（含个人权限配置）
+.claude/settings.local.json

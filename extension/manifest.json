@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Campus CLI Bridge",
+  "version": "1.0",
+
+  "permissions": [
+    "webRequest",
+    "cookies",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "https://mooc2.uestc.edu.cn/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  }
+}
